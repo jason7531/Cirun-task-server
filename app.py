@@ -12,7 +12,7 @@ import string
 from credentials import client_id, client_secret
 
 app = Flask(__name__)
-CORS(app)
+CORS(app, supports_credentials=True)
 app.secret_key = 'super secret key'
 
 authorization_base_url = 'https://github.com/login/oauth/authorize'
