@@ -6,5 +6,7 @@ and fetch the repos by passing on the username
 
 *Make sure to use the call back url to handle the authentication as its a mandatory part of the process
 
+*CORS and set_credentials have been allowed to mantain smooth communication between client and backend as the client is hostend on another server
+
 
 
