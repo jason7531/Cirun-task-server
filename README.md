@@ -20,5 +20,10 @@ http://localhost:4000/callback       | POST   | payload automatically passed aft
 http://localhost:4000/index          | GET    | N/A                   | Returns the user info
 http://localhost:4000/user/`username`| GET    | N/A                   | Returns an array of repos
 
+### `http://localhost:4000/index` Response Sample : 
+
+![index reponse](/images/image1.jpeg?raw=true "JSON Response to /index")
+![user reponse](/images/image2.jpeg?raw=true "JSON Response to /user/username")
+
 
 
