@@ -12,7 +12,13 @@ and fetch the repos by passing on the username
 6. Run the app: `python app.py` 
 7. Acess the server on: `http://localhost:4000/handleLogin` 
 
-
+### API Doc
+URL                                  | Method | Body                  | Description
+-------------------------------------|--------|-----------------------|---------------------------------------
+http://localhost:4000/handleLogin    | GET    | N/A                   | Redirects to the login page of github
+http://localhost:4000/callback       | POST   | payload automatically passed after putting in credentials   | Handles the authentication 
+http://localhost:4000/index          | GET    | N/A                   | Returns the user info
+http://localhost:4000/user/`username`| GET    | N/A                   | Returns an array of repos
 
 
 
