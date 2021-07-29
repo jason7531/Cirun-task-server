@@ -23,6 +23,8 @@ http://localhost:4000/user/`username`| GET    | N/A                   | Returns 
 ### `http://localhost:4000/index` Response Sample : 
 
 ![index reponse](/images/image1.jpeg?raw=true "JSON Response to /index")
+
+### `http://localhost:4000/user/<username>` Response Sample :
 ![user reponse](/images/image2.jpeg?raw=true "JSON Response to /user/username")
 
 
