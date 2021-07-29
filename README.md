@@ -10,7 +10,7 @@ and fetch the repos by passing on the username
 5. Add following things to your `.env`:
  * Set `CLIENT_ID` and `CLIENT_SECRET` to the values obtained from github
 6. Run the app: `python app.py` 
- 
+7. Acess the server on: `http://localhost:4000/handleLogin` 
 
 
 
