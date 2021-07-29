@@ -12,12 +12,15 @@ import string
 from credentials import client_id, client_secret
 
 app = Flask(__name__)
+# To enable CORS with the credentials
 CORS(app, supports_credentials=True)
 app.secret_key = 'super secret key'
 
 authorization_base_url = 'https://github.com/login/oauth/authorize'
 token_url = 'https://github.com/login/oauth/access_token'
 request_url = 'https://api.github.com'
+
+# initiates the authorization process and redirects to the github login page
 
 
 @app.route('/handleLogin', methods=["GET"])
@@ -35,6 +38,8 @@ def handleLogin():
         return redirect(fetch_url)
     else:
         return jsonify(invalid_state_token="invalid_state_token")
+
+# authenticates the user based on the credentials entered
 
 
 @app.route('/callback', methods=['GET', 'POST'])
@@ -66,6 +71,8 @@ def handle_callback():
     else:
         return jsonify(error="404_no_code"), 404
 
+# returns user info such as github username which can be used to further fetch repos
+
 
 @app.route('/index', methods=["GET"])
 def index():
@@ -91,10 +98,12 @@ def index():
             gh_bio=bio,
             name=name
         )
-        # return redirect("/user/"+username)
+
     except AttributeError:
         app.logger.debug('error getting username from github, whoops')
         return "I don't know who you are; I should, but regretfully I don't", 500
+
+# returns repos of the user
 
 
 @app.route('/user/<string:username>')
@@ -139,35 +148,6 @@ def getRepos(username):
     else:
         res = req.json()['message']
         return jsonify(error=res)
-
-
-@app.route('/user/<string:username>/<string:repo_name>/commits')
-def getCommits(username, repo_name):
-    if not 'access_token' in login_session:
-        invalid_access_token = "Access token has expired or not in session"
-        app.logger.error(invalid_access_token)
-        return jsonify(invalid_access_token=invalid_access_token)
-    if not username and not repo_name:
-        return jsonify(username_not_give="Github username or repo_name missing")
-    url = request_url + '/repos/{username}/{repo_name}/commits'\
-        .format(username=username, repo_name=repo_name)
-    headers = {'Accept': 'application/json'}
-    res = request.get(url, headers=headers)
-    commits = res.json()
-    try:
-        app.logger.info("Try to get commits information inside getCommits")
-        commit_info = []
-        for commit in commits:
-            commit_dict = {}
-            commit_dict['commit_author'] = commit['commit']['author']['name']
-            commit_dict['commit_date'] = commit['commit']['author']['date']
-            commit_dict['commit_msg'] = commit['commit']['message']
-            commit_info.append(commit_dict)
-        app.logger.info("Commit info retrieval successfull")
-        return jsonify(commits=commit_info)
-    except (TypeError, AttributeError, KeyError)as e:
-        app.logger.error(e)
-        return jsonify(error=e)
 
 
 if __name__ == '__main__':
